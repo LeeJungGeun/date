@@ -52,6 +52,7 @@ BEGIN_MESSAGE_MAP(Cex1Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTONpoint, &Cex1Dlg::OnBnClickedButtonpoint)
 	ON_BN_CLICKED(IDC_BUTTONback, &Cex1Dlg::OnBnClickedButtonback)
 	ON_BN_CLICKED(root, &Cex1Dlg::OnBnClickedroot)
+	ON_BN_CLICKED(IDC_BUTTONvalue, &Cex1Dlg::OnBnClickedButtonvalue)
 END_MESSAGE_MAP()
 
 
@@ -525,7 +526,7 @@ void Cex1Dlg::OnBnClickedButtonback() //1글자만 지우기
 }
 
 
-void Cex1Dlg::OnBnClickedroot()
+void Cex1Dlg::OnBnClickedroot() //루트
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString str;
@@ -537,5 +538,20 @@ void Cex1Dlg::OnBnClickedroot()
 
 	GetDlgItemText(IDC_EDIT2, str);
 	SetDlgItemText(IDC_EDIT2, str + L"√");
+}
+
+
+void Cex1Dlg::OnBnClickedButtonvalue() //플마변환
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString str;
+	GetDlgItemText(IDC_EDIT1, str);
+	double n, num1= _wtof(str);
+	n = num1*-1;
+	str.Format(_T("%g"), n);
+	SetDlgItemText(IDC_EDIT1, str);
+
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, L"-"+str);
 
 }
