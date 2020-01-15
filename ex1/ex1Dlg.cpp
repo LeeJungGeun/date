@@ -368,6 +368,9 @@ void Cex1Dlg::OnBnClickedButtonpoint() //소숫점입력
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L".");
+
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L".");
 }
 
 BOOL Cex1Dlg::PreTranslateMessage(MSG* pMsg)
@@ -526,5 +529,13 @@ void Cex1Dlg::OnBnClickedroot()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString str;
+	GetDlgItemText(IDC_EDIT1, str);
+	double num1 = _wtof(str);
+	num1 = sqrt(num1);
+	str.Format(_T("%f"), num1);
+	SetDlgItemText(IDC_EDIT1,str);
+
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"√");
 
 }
