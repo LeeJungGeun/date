@@ -1,6 +1,8 @@
 # Test
 마크다운 테스트
 
+README.md의 md는 Mark Down의 줄인말
+
 # printf("Hello World!");
 
 
