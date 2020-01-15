@@ -26,4 +26,6 @@ README.md의 md는 Mark Down의 줄인말
 
 calc 과정과 결과가 따로 나오도록 변경
 
-calc 백스페이스 기능 
+calc 백스페이스 기능 추가
+
+calc 루트기능 추가, 키보드 .키 안되던점 
