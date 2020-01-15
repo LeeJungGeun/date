@@ -6,6 +6,7 @@
 #include "ex1.h"
 #include "ex1Dlg.h"
 #include "afxdialogex.h"
+#include "math.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,7 +50,8 @@ BEGIN_MESSAGE_MAP(Cex1Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON16, &Cex1Dlg::OnBnClickedButtonfinish)
 	ON_BN_CLICKED(IDC_BUTTON15, &Cex1Dlg::OnBnClickedButtonclear)
 	ON_BN_CLICKED(IDC_BUTTONpoint, &Cex1Dlg::OnBnClickedButtonpoint)
-	ON_BN_CLICKED(IDC_BUTTON17back, &Cex1Dlg::OnBnClickedButtonback)
+	ON_BN_CLICKED(IDC_BUTTONback, &Cex1Dlg::OnBnClickedButtonback)
+	ON_BN_CLICKED(root, &Cex1Dlg::OnBnClickedroot)
 END_MESSAGE_MAP()
 
 
@@ -113,8 +115,9 @@ void Cex1Dlg::OnBnClickedButton1()
 	
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
-	str2 = str;
 	SetDlgItemText(IDC_EDIT1, str+L"1");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"1");
 }
 
 
@@ -124,6 +127,8 @@ void Cex1Dlg::OnBnClickedButton2()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"2");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"2");
 }
 
 
@@ -133,6 +138,8 @@ void Cex1Dlg::OnBnClickedButton3()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"3");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"3");
 }
 
 
@@ -142,6 +149,8 @@ void Cex1Dlg::OnBnClickedButton4()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"4");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"4");
 }
 
 
@@ -151,6 +160,8 @@ void Cex1Dlg::OnBnClickedButton5()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"5");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"5");
 }
 
 
@@ -160,6 +171,8 @@ void Cex1Dlg::OnBnClickedButton6()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"6");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"6");
 }
 
 
@@ -169,6 +182,8 @@ void Cex1Dlg::OnBnClickedButton7()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"7");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"7");
 }
 
 
@@ -178,6 +193,8 @@ void Cex1Dlg::OnBnClickedButton8()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"8");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"8");
 }
 
 
@@ -187,6 +204,8 @@ void Cex1Dlg::OnBnClickedButton9()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"9");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"9");
 }
 
 
@@ -196,6 +215,8 @@ void Cex1Dlg::OnBnClickedButton10()
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
 	SetDlgItemText(IDC_EDIT1, str + L"0");
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"0");
 }
 
 void Cex1Dlg::OnBnClickedButtonplus()//플러스
@@ -206,6 +227,9 @@ void Cex1Dlg::OnBnClickedButtonplus()//플러스
 	GetDlgItemText(IDC_EDIT1,firsts);
 	first = _wtof(firsts);
 	SetDlgItemText(IDC_EDIT1, L" ");
+	CString str;
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"+");
 }
 
 
@@ -217,6 +241,9 @@ void Cex1Dlg::OnBnClickedButtonMinus()//마이너스
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
 	SetDlgItemText(IDC_EDIT1, L" ");
+	CString str;
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"-");
 }
 
 
@@ -230,6 +257,9 @@ void Cex1Dlg::OnBnClickedButtonmultiply()//곱하기
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
 	SetDlgItemText(IDC_EDIT1, L" ");
+	CString str;
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"*");
 }
 
 
@@ -241,6 +271,9 @@ void Cex1Dlg::OnBnClickedButtondivision()//나누기
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
 	SetDlgItemText(IDC_EDIT1, L" ");
+	CString str;
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"/");
 }
 
 
@@ -325,6 +358,7 @@ void Cex1Dlg::OnBnClickedButtonclear() // 클리어
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	SetDlgItemText(IDC_EDIT1, L" ");
+	SetDlgItemText(IDC_EDIT2, L" ");
 }
 
 
@@ -472,12 +506,25 @@ BOOL Cex1Dlg::PreTranslateMessage(MSG* pMsg)
 
 
 
-void Cex1Dlg::OnBnClickedButtonback()
+void Cex1Dlg::OnBnClickedButtonback() //1글자만 지우기
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	SetDlgItemText(IDC_EDIT1, L" ");
+	
 	CString str;
+	CString str2;
 	GetDlgItemText(IDC_EDIT1, str);
-	str.Delete(str.GetLength()-1, 1);
+	GetDlgItemText(IDC_EDIT2, str2);
+
+	str = str.Left(str.GetLength() - 1); // 문자열 str의 길이를 1칸 줄인다.
+
 	SetDlgItemText(IDC_EDIT1, str);
+	SetDlgItemText(IDC_EDIT2, str);
+}
+
+
+void Cex1Dlg::OnBnClickedroot()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString str;
+
 }

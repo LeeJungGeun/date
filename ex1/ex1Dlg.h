@@ -52,5 +52,5 @@ public:
 	afx_msg void OnBnClickedButtonpoint();
 	BOOL PreTranslateMessage(MSG * pMsg);
 	afx_msg void OnBnClickedButtonback();
-	CString str2;
+	afx_msg void OnBnClickedroot();
 };
