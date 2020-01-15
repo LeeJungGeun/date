@@ -53,6 +53,7 @@ BEGIN_MESSAGE_MAP(Cex1Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTONback, &Cex1Dlg::OnBnClickedButtonback)
 	ON_BN_CLICKED(root, &Cex1Dlg::OnBnClickedroot)
 	ON_BN_CLICKED(IDC_BUTTONvalue, &Cex1Dlg::OnBnClickedButtonvalue)
+	ON_BN_CLICKED(IDC_BUTTONSquared, &Cex1Dlg::OnBnClickedButtonsquared)
 END_MESSAGE_MAP()
 
 
@@ -351,6 +352,23 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		}
 		break;
 	}
+	case 4: // /
+	{
+		CString str;
+		GetDlgItemText(IDC_EDIT1, str);
+
+		double num1 = _wtof(str);
+		int bb = pow(first , num1);
+
+		if (pow(first, num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
+			str.Format(L"%g", pow(first, num1));
+			SetDlgItemText(IDC_EDIT1, str);
+		}
+		else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
+			SetDlgItemInt(IDC_EDIT1, pow(first, num1));
+		}
+		break;
+	}
 	}
 }
 
@@ -553,5 +571,20 @@ void Cex1Dlg::OnBnClickedButtonvalue() //플마변환
 
 	GetDlgItemText(IDC_EDIT2, str);
 	SetDlgItemText(IDC_EDIT2, L"-"+str);
+
+}
+
+
+void Cex1Dlg::OnBnClickedButtonsquared() //제곱계산
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	start = 4;
+	CString firsts;
+	GetDlgItemText(IDC_EDIT1, firsts);
+	first = _wtof(firsts);
+	SetDlgItemText(IDC_EDIT1, L" ");
+	CString str;
+	GetDlgItemText(IDC_EDIT2, str);
+	SetDlgItemText(IDC_EDIT2, str + L"^");
 
 }
