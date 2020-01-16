@@ -341,14 +341,18 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		GetDlgItemText(IDC_EDIT1, str);
 
 		double num1 = _wtof(str);
-		int bb = first / num1;
-
-		if ((first/num1) -bb > 0) {		//소숫점 이하의 수가 있는경우
-			str.Format(L"%g", first / num1);
-			SetDlgItemText(IDC_EDIT1, str);
+		if (num1 != 0) {
+			int bb = first / num1;
+			if ((first / num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
+				str.Format(L"%g", first / num1);
+				SetDlgItemText(IDC_EDIT1, str);
+			}
+			else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
+				SetDlgItemInt(IDC_EDIT1, first / num1);
+			}
 		}
-		else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
-			SetDlgItemInt(IDC_EDIT1, first / num1);
+		else {
+			SetDlgItemText(IDC_EDIT2, L"0으로 나눌 수 없습니다.");
 		}
 		break;
 	}
