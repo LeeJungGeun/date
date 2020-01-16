@@ -24,7 +24,10 @@ https://www.visualsvn.com/visualsvn/download/tortoisesvn/
 
 5.SourceTree
 https://www.sourcetreeapp.com/
+
 회원가입 필요
+
+SSH키는 없을테니 아니오 버튼을 누르면 설치완료입니다.
 
 6.notepad++
 https://notepad-plus-plus.org/downloads/v7.8.2/
