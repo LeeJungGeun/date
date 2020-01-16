@@ -8,10 +8,7 @@
   - 2015를 선택하고 다운로드합니다.
   ![image](https://user-images.githubusercontent.com/59942506/72493177-578d0980-3863-11ea-8b10-43b3ad8e1f5b.png)
   
- custom 옵션에서 프로그래밍언어 C++을 선택하고
- 
- 옵션 맨 아래쪽에서 git과 github도 선택 후 다운로드 합니다.
-  
+ custom 옵션에서 프로그래밍언어 C++을 선택합니다.  
 
 Visual studio 라이센스
 마이크로소프트에 로그인만하면 사용가능
