@@ -50,13 +50,15 @@ http://github.com/
 -------
 
 해당 코드의 구문 구별 표시가 적용된다
-"```javascript 
+" ```
+javascript 
 function test() { 
  console.log("hello world!"); 
 } 
-```"
+``` "
 
-```javascript 
+```
+javascript 
 function test() { 
  console.log("hello world!"); 
 } 
