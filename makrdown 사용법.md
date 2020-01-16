@@ -53,8 +53,7 @@ http://github.com/
 
 지원하는 프로그래밍 언어 이름을 백틱 시작 부분에 입력하면 문법 하이라이팅도 가능합니다.
 
-```
-c
+```c
 #include <stdio.h>
 int main(void){
 printf("Hello World");
