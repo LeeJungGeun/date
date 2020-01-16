@@ -50,8 +50,14 @@ http://github.com/
 -------
 
 해당 코드의 구문 구별 표시가 적용된다
-"``` #include <stdio.h> void main() { printf("Hello World!"); }```"
+"```javascript 
+function test() { 
+ console.log("hello world!"); 
+} 
+```"
 
-```
-#include <stdio.h> void main() { printf("Hello World!"); }
+```javascript 
+function test() { 
+ console.log("hello world!"); 
+} 
 ```
