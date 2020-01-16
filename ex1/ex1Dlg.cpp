@@ -225,9 +225,11 @@ void Cex1Dlg::OnBnClickedButtonplus()//플러스
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	start = 0;
+	starts = starts + 1;
 	CString firsts;
 	GetDlgItemText(IDC_EDIT1,firsts);
 	first = _wtof(firsts);
+	second = second + first;
 	SetDlgItemText(IDC_EDIT1, L" ");
 	CString str;
 	GetDlgItemText(IDC_EDIT2, str);
@@ -239,13 +241,22 @@ void Cex1Dlg::OnBnClickedButtonMinus()//마이너스
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	start = 1;
+	starts = starts + 1;
 	CString firsts;
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
+
+	if (starts==1) {
+		second = first-second;
+	}
+	else {
+		second = second - first;
+	}
 	SetDlgItemText(IDC_EDIT1, L" ");
 	CString str;
 	GetDlgItemText(IDC_EDIT2, str);
 	SetDlgItemText(IDC_EDIT2, str + L"-");
+
 }
 
 
@@ -255,9 +266,11 @@ void Cex1Dlg::OnBnClickedButtonmultiply()//곱하기
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	start = 2;
+	starts = starts + 1;
 	CString firsts;
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
+	second = second * first;
 	SetDlgItemText(IDC_EDIT1, L" ");
 	CString str;
 	GetDlgItemText(IDC_EDIT2, str);
@@ -269,9 +282,11 @@ void Cex1Dlg::OnBnClickedButtondivision()//나누기
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	start = 3;
+	starts = starts + 1;
 	CString firsts;
 	GetDlgItemText(IDC_EDIT1, firsts);
 	first = _wtof(firsts);
+	second = second / first;
 	SetDlgItemText(IDC_EDIT1, L" ");
 	CString str;
 	GetDlgItemText(IDC_EDIT2, str);
@@ -289,14 +304,14 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		GetDlgItemText(IDC_EDIT1, str);
 
 		double num1 = _wtof(str); //실수형변환
-		int bb = first + num1; // 최종결과값 정수형 변환
+		int bb = second + num1; // 최종결과값 정수형 변환
 
-		if ((first + num1) - bb > 0) {		// 정수형의 소숫점은 버린다는것을 이용하여 실수-정수를 계산 소숫점 이하의 수가 있는경우
-			str.Format(L"%g", first + num1);
+		if ((second + num1) - bb > 0) {		// 정수형의 소숫점은 버린다는것을 이용하여 실수-정수를 계산 소숫점 이하의 수가 있는경우
+			str.Format(L"%g", second + num1);
 			SetDlgItemText(IDC_EDIT1, str);
 		}
 		else { // 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
-			SetDlgItemInt(IDC_EDIT1, first+num1);
+			SetDlgItemInt(IDC_EDIT1, second+num1);
 		}
 		break;
 	}
@@ -306,15 +321,15 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		GetDlgItemText(IDC_EDIT1, str);
 
 		double num1 = _wtof(str);
-		int bb = first - num1;
+		int bb = second - num1;
 
-		if ((first - num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
-			str.Format(L"%g", first - num1);
+		if ((second - num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
+			str.Format(L"%g", second - num1);
 			SetDlgItemText(IDC_EDIT1, str);
 			
 		}
 		else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
-			SetDlgItemInt(IDC_EDIT1, first - num1);
+			SetDlgItemInt(IDC_EDIT1, second - num1);
 		}
 		break;
 	}
@@ -324,14 +339,14 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		GetDlgItemText(IDC_EDIT1, str);
 
 		double num1 = _wtof(str);
-		int bb = first * num1;
+		int bb = second * num1;
 
-		if ((first * num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
-			str.Format(L"%g", first * num1);
+		if ((second * num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
+			str.Format(L"%g", second * num1);
 			SetDlgItemText(IDC_EDIT1, str);
 		}
 		else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
-			SetDlgItemInt(IDC_EDIT1, first * num1);
+			SetDlgItemInt(IDC_EDIT1, second * num1);
 		}
 		break;
 	}
@@ -342,13 +357,13 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 
 		double num1 = _wtof(str);
 		if (num1 != 0) {
-			int bb = first / num1;
-			if ((first / num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
-				str.Format(L"%g", first / num1);
+			int bb = second / num1;
+			if ((second / num1) - bb > 0) {		//소숫점 이하의 수가 있는경우
+				str.Format(L"%g", second / num1);
 				SetDlgItemText(IDC_EDIT1, str);
 			}
 			else {	// 실수-정수가 0인상태 소숫점 이하의 수가 없는경우
-				SetDlgItemInt(IDC_EDIT1, first / num1);
+				SetDlgItemInt(IDC_EDIT1, second+ num1);
 			}
 		}
 		else {
@@ -356,7 +371,7 @@ void Cex1Dlg::OnBnClickedButtonfinish()
 		}
 		break;
 	}
-	case 4: // /
+	case 4: // 제곱
 	{
 		CString str;
 		GetDlgItemText(IDC_EDIT1, str);
@@ -381,6 +396,8 @@ void Cex1Dlg::OnBnClickedButtonclear() // 클리어
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	first = 0;
+	second = 0;
+	starts = 0;
 	SetDlgItemText(IDC_EDIT1, L" ");
 	SetDlgItemText(IDC_EDIT2, L" ");
 }

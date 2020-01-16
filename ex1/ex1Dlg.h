@@ -46,7 +46,7 @@ public:
 	afx_msg void OnBnClickedButtonmultiply();
 	afx_msg void OnBnClickedButtondivision();
 	int start; // 0=플러스 1=마이너스 2=곱하기 3=나누기
-	double first; // 계산전의 수
+	double first=0; // 계산전의 수
 	afx_msg void OnBnClickedButtonfinish();
 	afx_msg void OnBnClickedButtonclear();
 	afx_msg void OnBnClickedButtonpoint();
@@ -55,4 +55,6 @@ public:
 	afx_msg void OnBnClickedroot();
 	afx_msg void OnBnClickedButtonvalue();
 	afx_msg void OnBnClickedButtonsquared();
+	double second=0;
+	int starts=0;
 };
