@@ -50,8 +50,8 @@ http://github.com/
 -------
 
 해당 코드의 구문 구별 표시가 적용된다
-"```printf("Hello World!");```"
+"``` #include <stdio.h> void main() { printf("Hello World!"); }```"
 
 ```
-printf("Hello World!");
+#include <stdio.h> void main() { printf("Hello World!"); }
 ```
