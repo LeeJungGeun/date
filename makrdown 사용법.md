@@ -49,17 +49,15 @@ http://github.com/
 5.코드블록
 -------
 
-해당 코드의 구문 구별 표시가 적용된다
-" ```
-javascript 
-function test() { 
- console.log("hello world!"); 
-} 
-``` "
+백틱 세개를 문장의 위 아래에 입력하면 코드펜스 영역이 되며 
+
+지원하는 프로그래밍 언어 이름을 백틱 시작 부분에 입력하면 문법 하이라이팅도 가능합니다.
 
 ```
-javascript 
-function test() { 
- console.log("hello world!"); 
-} 
+c++
+#include <stdio.h>
+void main(){
+printf("Hello World");
+}
+
 ```
