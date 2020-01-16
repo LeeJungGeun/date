@@ -16,6 +16,8 @@ Visual studio 라이센스
 3.VisualSVN 설치
 https://www.visualsvn.com/visualsvn/download/
 
+다운받은 visual studio의버전과 같은버전을 다운받습니다.
+
 4.TortoiseSVN 설치
 https://www.visualsvn.com/visualsvn/download/tortoisesvn/
 
