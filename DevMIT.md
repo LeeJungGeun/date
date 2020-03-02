@@ -1020,3 +1020,159 @@ if(fp != NULL)
 GetLocalTime으로 시간을 습득하고
 
 시간에 대한 정보를 시단위부터 밀리초단위까지 출력
+
+:OnBnClickedBtIcSpeed()
+------------------------
+````
+FILE *fp = fopen("C:\\MIT2000\\ictest.log","a+t") ;
+
+	Logf(fp,"---------가변길이 10계좌 얻기--------\n") ;
+	Logf(fp,"---------PinPad_SMC_PowerUp--------\n") ;
+	nResult = PinPad_SMC_PowerUp(ID1_CARD, cOutputData, &nOutputDataLen, &cModuleResult);
+	
+````
+ictest.log를 여는 FILE함수를 선언, 각 줄당 내용을 집어넣은다음
+
+Pinpad_SMC_PowerUp 함수를 실행한다
+
+````
+if(cModuleResult == 0x00 && nResult == 1)
+	{
+		strData.Format("%s",cOutputData);
+		AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputDataLen) ;
+		Logf(fp,"---------PinPad_SMC_PowerUp OK--------\n") ;
+		TraceHexa(fp, 0 , (unsigned char *)cOutputData, nOutputDataLen) ;
+	}
+	else
+	{
+		m_ctrlStatus.SetWindowText("IC Card Test 실패, 카드를 넣어주세요");
+		Logf(fp,"---------PinPad_SMC_PowerUp NG--------\n") ;
+		if(fp)	fclose(fp) ;
+		return;
+	}
+````
+cModuleResult가 0x00   nResult가 1  PinPad_SMC_PowerUp이 정상적으로 작동할경우 조건은 성립된다
+
+strData에 응답메세지를 대입하고
+
+TraceHexa 함수로 로그 저장
+
+````
+	{
+		m_ctrlStatus.SetWindowText("IC Card Test 실패, 카드를 넣어주세요");
+		Logf(fp,"---------PinPad_SMC_PowerUp NG--------\n") ;
+		if(fp)	fclose(fp) ;
+		return;
+	}
+````
+{
+	else{.SetWindowText("IC Card Test 실패, 카드를 넣어주세요");
+	Logf(fp,"---------PinPad_SMC_PowerUp NG--------\n") ;
+	if(fp)	fclose(fp) ;
+	return;
+}
+````
+PinPAd_SMC_PowerUp이 실패할 경우
+
+fp에 파일실패 메세지를 추가하고 리턴
+````
+
+	memset(cInputData, 0x00, sizeof(cInputData)); 
+	memcpy(cInputData, AID, 7);
+	nInputDataLen = 7;
+
+	memset(cOutputData, 0x00, sizeof(cOutputData)); 
+	nOutputDataLen = 0; 
+	char cStatus = 0x00;
+	unsigned short nSW = 0;
+	int Dev_id = 0;
+	int Cmd = 0;
+	int smc_result = 0 ;
+
+````
+cInputdata의 길이만 7로
+
+나머지 다른변수는 전부 0 혹은 0x00으로 초기화한다
+
+````
+memcpy(cInputData, "\x00\xA4\x00\x00\x02\xF1\x00", nInputDataLen = 7) ;
+	Logf(fp,"--------PinPad_SMC_ISOInput Send--------Len:%d\n", nInputDataLen) ;
+	TraceHexa(fp, 0 , (unsigned char *)cInputData, nInputDataLen) ; 
+	if(nInputDataLen > 0)	AddApduRcvdString(true, (unsigned char *)cInputData, nInputDataLen) ;
+	smc_result = PinPad_SMC_ISOInput(0x00, cInputData[0], cInputData[1], cInputData[2], cInputData[3], cInputData[4],
+										&cInputData[5], nInputDataLen-5, cOutputData, &nOutputDataLen,
+										&cStatus, &nSW) ;
+
+	Logf(fp,"---------PinPad_SMC_ISOInput Recv--------nSW:[%04X], Len:%d, smc_result:%d\n", nSW, nOutputDataLen, smc_result) ;
+	TraceHexa(fp, 0 , (unsigned char *)cOutputData, nOutputDataLen) ;
+
+	if(nOutputDataLen >= 0)	AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputDataLen, nSW) ;
+````
+
+응답 데이터의 메모리를 \x00\xA4\x00\x00\x02\xF1\x00로 세팅
+
+fp 로 선언한 파일에 본문내용 추가
+
+TraceHexa 함수로 로그내역에 응답데이터와 데이터의 길이 추가
+
+정상적으로 프로그램이 작동했다면 데이터의 길이가 7이므로 AddAdpuRcvdString함수 작동
+
+PinPad_SMC_ISOInput함수 작동 후
+
+Logf함수로 PinPad_SMC_ISOInput 함수의 내용을 기록
+
+HexaTrace함수로 로그 기록
+
+이것과 비슷한 내용을 3번 반복.
+
+````
+for(int acc = 1; acc <= 10; acc++)
+{
+	memcpy(cInputData, "\x00\xB2\x01\x14\x00", nInputDataLen = 5) ;
+	cInputData[2] = (unsigned char)acc ;
+	Logf(fp,"-----Read Recode----PinPad_SMC_ISOOutput Send--------Len:%d\n", nInputDataLen) ;
+	TraceHexa(fp, 0 , (unsigned char *)cInputData, nInputDataLen) ; 
+	if(nInputDataLen > 0)	AddApduRcvdString(true, (unsigned char *)cInputData, nInputDataLen) ;
+	smc_result = PinPad_SMC_ISOOutput(0x00, cInputData[0], cInputData[1], cInputData[2], cInputData[3], cInputData[4],
+									cOutputData, &nOutputDataLen,
+									&cStatus, &nSW) ;
+	Logf(fp,"-----Read Recode----PinPad_SMC_ISOOutput Recv--------nSW:[%04X], Len:%d, smc_result:%d\n", nSW, nOutputDataLen, smc_result) ;
+	TraceHexa(fp, 0 , (unsigned char *)cOutputData, nOutputDataLen) ;
+	if(nOutputDataLen >= 0)	AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputDataLen, nSW) ;
+	if((nSW & 0x0000FF00) == 0x00006C00)
+	{
+		////////////////////0   1   2   3   4   5   6   7   8   9   0   1   2
+		memcpy(cInputData, "\x00\xB2\x01\x14\x40", nInputDataLen = 5) ;
+		cInputData[4] = (unsigned char)(nSW & 0x000000FF) ;
+		cInputData[2] = (unsigned char)acc ;
+		Logf(fp,"-----Read Recode----PinPad_SMC_ISOOutput Send--------Len:%d\n", nInputDataLen) ;
+		TraceHexa(fp, 0 , (unsigned char *)cInputData, nInputDataLen) ; 
+	if(nInputDataLen > 0)	AddApduRcvdString(true, (unsigned char *)cInputData, nInputDataLen) ;
+		smc_result = PinPad_SMC_ISOOutput(0x00, cInputData[0], cInputData[1], cInputData[2], cInputData[3], cInputData[4],
+									cOutputData, &nOutputDataLen,
+									&cStatus, &nSW) ;
+		Logf(fp,"-----Read Recode----PinPad_SMC_ISOOutput Recv--------nSW:[%04X], Len:%d, smc_result:%d\n", nSW, nOutputDataLen, smc_result) ;
+		TraceHexa(fp, 0 , (unsigned char *)cOutputData, nOutputDataLen) ;
+		if(nOutputDataLen >= 0)	AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputDataLen, nSW) ;
+	}
+}
+````
+응답 데이터의 메모리를 "\x00\xB2\x01\x14\x00" 길이 5로 복사
+
+Logf 함수로 fp파일에 본분내용 추가
+
+HexaTrace로 데이터의 내용과 길이 기록
+
+프로그램이 정상적일 경우 nInputDataLen은 5이므로 조건이 성립
+
+AddApduRcvdString 함수로데이터의 내용과 길이 저장
+
+PinPad_SMC_ISOInput함수 작동
+
+작동한 내용을  Logf함수로 저장
+
+TraceHexa함수로 내용과 길이 로그에 기록
+
+응답코드의 조건이 성립할경우 비슷한 내용의 메모리 세팅을 한번더 반복
+
+그리고 이 모든과정을 10번 반복한다.
