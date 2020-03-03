@@ -1058,13 +1058,6 @@ strData에 응답메세지를 대입하고
 TraceHexa 함수로 로그 저장
 
 ````
-	{
-		m_ctrlStatus.SetWindowText("IC Card Test 실패, 카드를 넣어주세요");
-		Logf(fp,"---------PinPad_SMC_PowerUp NG--------\n") ;
-		if(fp)	fclose(fp) ;
-		return;
-	}
-````
 {
 	else{.SetWindowText("IC Card Test 실패, 카드를 넣어주세요");
 	Logf(fp,"---------PinPad_SMC_PowerUp NG--------\n") ;
@@ -1176,3 +1169,150 @@ TraceHexa함수로 내용과 길이 로그에 기록
 응답코드의 조건이 성립할경우 비슷한 내용의 메모리 세팅을 한번더 반복
 
 그리고 이 모든과정을 10번 반복한다.
+
+
+OnBnClickedClearSet
+-------------
+
+````
+	m_strLcdData.Empty() ;
+	UpdateData(FALSE);
+````
+LcdData의 내용을 초기화한다.
+
+````
+m_strApduResponse.Empty();
+m_ctrlApduResponse.SetWindowText(m_strApduResponse);
+m_ctrlApduResponse.SetSel(m_strApduResponse.GetLength(), -1);
+m_ctrlApduResponse.LineScroll(m_ctrlApduResponse.GetLineCount(), 0);
+m_ctrlApduResponse.SendMessage(WM_VSCROLL, SB_BOTTOM, NULL);
+````
+ctrlAdpuRespone을 비우고 관련된 함수들도 모두 0기준으로 고친다
+
+````
+	int ret = 0;
+	UpdateData(TRUE);
+	
+	KillAllTimer();
+	
+	//if(CancelPinPad())
+	{
+		ret = Pinpad_SMC_InsertCheck() ;
+
+		if(ret == SUCCESS)				m_ctrlStatus.SetWindowText("IC 카드 삽입 됨") ;
+		else if(ret == WAIT)			m_ctrlStatus.SetWindowText("IC 카드 아직 삽입되지 않음") ;
+		else if(ret == HW_ERROR)		m_ctrlStatus.SetWindowText(HW_ERROR_MSG);
+		else if(ret == CONNECTION_FAIL)	m_ctrlStatus.SetWindowText(CONNECTION_FAIL_MSG);
+		else if(ret == FUNCTION_FAIL)	m_ctrlStatus.SetWindowText(FUNCTION_FAIL_MSG);
+	}	
+````
+KillAllTimer()함수 작동
+
+PinPd_SMC_InsertCheck 를 실행하고 성공 실패 여부를 SetWindowText한다
+
+OnBnClickedButtonPfPowerup()
+--------------------------
+````
+ret = InitPinPad(); // CancelPinPad가 더욱 확실함.
+ret = RF_PowerUp(nCardType, cOutputData , &nOutputLen , &cStatus);
+if(ret == 1 && cStatus == 0 )
+{
+	m_ctrlStatus.SetWindowText(CString("RF Card ATR PowerUp 통신 성공"));
+	AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputLen) ;
+}
+else
+	m_ctrlStatus.SetWindowText(CString("RF Card ATR PowerUp 통신 실패!!"));
+````
+InitPinPad()와 RF_PowerUp을 연달아 작동시키고
+
+RF_PowerUP의 성공 실패 여부를 SetWindowText 한다
+
+OnBnClickedButtonPfPowerdown()
+---------------------------------
+````
+int ret = RF_PowerDown(nCardType, &cStatus);
+if(ret == 1 && cStatus == 0 )
+	m_ctrlStatus.SetWindowText(CString("RF Card ATR Power Down 통신 성공!!"));
+else
+	m_ctrlStatus.SetWindowText(CString("RF Card ATR Power Down 통신 실패!!"));
+````
+ RF_PowerUp을 작동시키고
+
+RF_PowerUP의 성공 실패 여부를 SetWindowText 한다
+
+OnBnClickedButtonFindRfcard()
+-----------------------
+````
+ret = InitPinPad(); // CancelPinPad가 더욱 확실함.
+ret = RF_FindCard(&nCardType, cOutputData , &nOutputLen , &cStatus);
+if(ret == 1 && cStatus == 0 )
+{
+	m_ctrlStatus.SetWindowText(CString("RF Card Find 성공"));
+	AddApduRcvdString(false, (unsigned char *)cOutputData, nOutputLen) ;
+}
+else
+	m_ctrlStatus.SetWindowText(CString("RF Card Find 실패!!"));
+````
+InitPinPAD() 를 실행하고
+
+RF_FindeCard를 실행한다
+
+성공 실패 결과여불르 SetWindowText 한다
+
+:OnBnClickedButtonApduRfSend()
+------------------------------
+````
+AddApduRcvdString(true, send, send_len) ;
+nResult = RF_Command(nCardType, send, send_len, recv, &recv_len, &cStatus, &nSW);
+CString str ;
+if(nResult != 0x01)
+{
+	if(cStatus == 0xFB)
+		str.Format("RF Card 카드 없슴!!![status:0x%02X](SW:0x%04X)", cStatus, nSW);
+	else
+		str.Format("RF Card ATR APDU 명령 실패!!!!![status:0x%02X](SW:0x%04X)", cStatus, nSW);
+	m_ctrlStatus.SetWindowText(str);
+}
+else
+{
+	AddApduRcvdString(false, recv, recv_len, nSW) ;
+	str.Format("RF Card ATR APDU 명령 성공[status:0x%02X](SW:0x%04X)", cStatus, nSW);
+	m_ctrlStatus.SetWindowText(str);
+}
+````
+
+RF_Command 함수를 작동시킨다
+
+함수의 성공 실패 여부를 SetWindowText한다
+
+OnEnKillfocusEtPwMinLength()
+------------------------
+````
+UpdateData(TRUE) ;
+int value = CString2i(m_pwLengthMin, 17) ;
+if(value < 1)							m_pwLengthMin.Format("%d", 1) ;
+if(value > CString2i(m_pwLengthMax))	m_pwLengthMin = m_pwLengthMax ;
+UpdateData(FALSE) ;
+````
+control에 있는 변수를 가져온다음
+
+value를 CSTring2i의 리턴값과 같은값으로 초기화 
+
+value가 1미만일경우 1로 고정
+
+value가 m_pwLengthMax보다 클경우 Min을 Max와 같은값으로 초기화
+
+control에 변수를 집어넣음
+
+
+
+
+
+
+
+
+
+
+
+
+
